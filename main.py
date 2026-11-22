@@ -121,4 +121,50 @@ parametric_var_95_dollar = parametric_var_95 * portfolio_value
 parametric_var_99_dollar = parametric_var_99 * portfolio_value
 
 print(f'\nParametric VaR (95% confidence) in dollars: ${parametric_var_95_dollar:.2f}')
-print(f'Parametric VaR (99% confidence) in dollars: ${parametric_var_99_dollar:.2f}')   
+print(f'Parametric VaR (99% confidence) in dollars: ${parametric_var_99_dollar:.2f}')  
+
+# Now Stress Testing the Portfolio
+# Scenario 1: Technology Sector Crash (Nov 2026 Tech Sell-off)
+tech_shocks = pd.Series({
+    'AAPL': -0.06,
+    'JPM': -0.02,
+    'JNJ': 0.01,
+    'XOM': -0.02,
+    'WMT': 0.01
+})
+
+tech_shock_portfolio_return = tech_shocks.loc[tickers] @ weights
+tech_portfolio_pnl = tech_shock_portfolio_return * portfolio_value
+
+print(f'Tech Sell-off Return: {tech_shock_portfolio_return:.2%}')
+print(f'Tech Sell-off PnL: ${tech_portfolio_pnl:.2f}')
+
+# Scenario 2: Broad Market Downturn (Global Recession)
+market_shocks = pd.Series({
+    'AAPL': -0.08,
+    'JPM': -0.07,
+    'JNJ': -0.03,
+    'XOM': -0.06,
+    'WMT': -0.02
+})
+
+market_shock_portfolio_return = market_shocks.loc[tickers] @ weights
+market_portfolio_pnl = market_shock_portfolio_return * portfolio_value
+
+print(f'Market Downturn Return: {market_shock_portfolio_return:.2%}')
+print(f'Market Downturn PnL: ${market_portfolio_pnl:.2f}')
+
+# Scenario 3: Interest Rate Hike ( = 100 bpm)
+interest_rate_shocks = pd.Series({
+    'AAPL': -0.05,
+    'JPM': 0.02,
+    'JNJ': -0.02,
+    'XOM': -0.01,
+    'WMT': -0.03
+})
+
+rate_shock_portfolio_return = interest_rate_shocks.loc[tickers] @ weights
+rate_portfolio_pnl = rate_shock_portfolio_return * portfolio_value
+
+print(f'Interest Rate Hike Return: {rate_shock_portfolio_return:.2%}')
+print(f'Interest Rate Hike PnL: ${rate_portfolio_pnl:.2f}')
