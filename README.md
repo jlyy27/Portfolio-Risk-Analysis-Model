@@ -92,25 +92,25 @@ The model generates four visualisations to illustrate portfolio risk characteris
 
 The chart compares out-of-sample daily portfolio returns against the historical and parametric 95% VaR thresholds. Historical VaR breaches are highlighted to identify days when realised losses exceeded the estimated threshold.
 
-![VaR Backtesting](figures/figure_1.png)
+![VaR Backtesting](figures/Figure_1.png)
 
 ### 7.2 Correlation Heatmap
 
 The heatmap displays pairwise correlations between the five equities, illustrating relationships between individual asset returns and potential diversification benefits.
 
-![Correlation Heatmap](figures/figure_2.png)
+![Correlation Heatmap](figures/Figure_2.png)
 
 ### 7.3 Historical vs Parametric VaR
 
 The bar chart compares historical and parametric VaR estimates at the 95% and 99% confidence levels, expressed as potential daily losses in US dollars for the hypothetical $10,000 portfolio.
 
-![VaR Comparison](figures/figure_3.png)
+![VaR Comparison](figures/Figure_3.png)
 
 ### 7.4 Stress Testing
 
 The bar chart illustrates estimated portfolio losses under three hypothetical scenarios: a technology sector sell-off, a broad market downturn and an interest rate increase.
 
-![Stress Testing](figures/figure_4.png)
+![Stress Testing](figures/Figure_4.png)
 
 ## 8. Technologies Used
 
