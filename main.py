@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import matplotlib
+import matplotlib as plt
 import yfinance as yf
 
 # the stocks in portfolio to analyse 
