@@ -234,3 +234,97 @@ print(f"Parametric 99% VaR Breach Rate: {param_breach_rate_99:.2%}")
 
 print(f"95% VaR Breach Rate: {breach_rate_95:.2%}")
 print(f"99% VaR Breach Rate: {breach_rate_99:.2%}")
+
+#Visualisation 1: VaR Backtesting
+plt.figure(figsize=(12, 5))
+
+plt.plot(test_returns.index, test_returns,
+         label='Daily Portfolio Returns',
+         color='steelblue', linewidth=0.8)
+
+plt.axhline(y=-train_historical_var_95,
+            color='red', linestyle='--',
+            label='Historical 95% VaR')
+
+plt.axhline(y=-train_param_var_95,
+            color='orange', linestyle='--',
+            label='Parametric 95% VaR')
+
+plt.title('Portfolio Returns vs 95% VaR Thresholds')
+plt.xlabel('Date')
+plt.ylabel('Daily Return')
+plt.scatter(
+    test_returns.index[breaches_95],
+    test_returns[breaches_95],
+    color='red',
+    marker='x',
+    s=45,
+    label='Historical VaR Breaches'
+)
+plt.legend()
+plt.grid(alpha=0.3)
+
+plt.show()
+
+# Visualisation 2: Stock Correlation Heatmap
+plt.figure(figsize=(8, 6))
+
+plt.imshow(correlation_matrix, cmap='coolwarm', vmin=-1, vmax=1)
+
+plt.colorbar(label='Correlation Coefficient')
+
+plt.xticks(range(len(correlation_matrix.columns)), correlation_matrix.columns)
+plt.yticks(range(len(correlation_matrix.index)), correlation_matrix.index)
+
+plt.title('Stock Return Correlation Matrix')
+
+# Display correlation coefficients inside each square
+for i in range(len(correlation_matrix.index)):
+    for j in range(len(correlation_matrix.columns)):
+        plt.text(
+            j, i,
+            f"{correlation_matrix.iloc[i, j]:.2f}",
+            ha='center',
+            va='center',
+            color='black'
+        )
+
+plt.show()
+
+# Visualisation 3: Historical vs Parametric VaR
+confidence_levels = ['95%', '99%']
+
+historical_values = [historical_var_95_dollar, historical_var_99_dollar]
+parametric_values = [parametric_var_95_dollar, parametric_var_99_dollar]
+
+x = np.arange(len(confidence_levels))
+width = 0.35
+
+plt.figure(figsize=(8, 5))
+
+plt.bar(x - width/2, historical_values, width,
+        label='Historical VaR')
+
+plt.bar(x + width/2, parametric_values, width,
+        label='Parametric VaR')
+
+plt.xticks(x, confidence_levels)
+plt.xlabel('Confidence Level')
+plt.ylabel('Value at Risk ($)')
+plt.title('Historical vs Parametric VaR')
+plt.legend()
+
+plt.show()
+
+# Visualisation 4: Stress testing comparison
+stress_scenarios = ['Tech Sell-off', 'Market Downturn', 'Interest Rate Hike']
+stress_loss = [- tech_portfolio_pnl, - market_portfolio_pnl,- rate_portfolio_pnl]
+
+plt.figure(figsize=(8, 5))
+plt.bar(stress_scenarios, stress_loss, color='steelblue')
+
+plt.title('Portfolio Losses Under Stress Scenarios')
+plt.xlabel('Stress Scenario')
+plt.ylabel('Portfolio Loss ($)')
+
+plt.show()
