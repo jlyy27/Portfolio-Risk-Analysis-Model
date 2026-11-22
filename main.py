@@ -123,6 +123,18 @@ parametric_var_99_dollar = parametric_var_99 * portfolio_value
 print(f'\nParametric VaR (95% confidence) in dollars: ${parametric_var_95_dollar:.2f}')
 print(f'Parametric VaR (99% confidence) in dollars: ${parametric_var_99_dollar:.2f}')  
 
+# Calculate historical Expected Shortfall (ES)
+tail_returns_95 = portfolio_returns[portfolio_returns <= portfolio_returns.quantile(0.05)]
+
+es_95 = -tail_returns_95.mean()
+print(f'\nHistorical Expected Shortfall (95% confidence): {es_95:.4%}')
+
+tail_returns_99 = portfolio_returns[portfolio_returns <= portfolio_returns.quantile(0.01)]
+es_99 = -tail_returns_99.mean()
+print(f'Historical Expected Shortfall (99% confidence): {es_99:.4%}')
+
+
+
 # Now Stress Testing the Portfolio
 # Scenario 1: Technology Sector Crash (Nov 2026 Tech Sell-off)
 tech_shocks = pd.Series({
