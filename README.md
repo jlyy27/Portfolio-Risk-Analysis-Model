@@ -53,3 +53,95 @@ Three hypothetical scenarios are applied to evaluate portfolio sensitivity to ad
 
 Each scenario applies assumed asset-level percentage shocks to estimate the corresponding portfolio return and dollar loss.
 
+## 5. VaR Backtesting
+
+Historical and parametric VaR estimates are evaluated using an 80/20 chronological training-testing split.
+
+The model compares observed daily losses against fixed VaR thresholds estimated from the training sample and calculates breach frequencies at the 95% and 99% confidence levels.
+
+## 6. Selected Results
+
+| Risk Measure | 95% | 99% |
+|---|---:|---:|
+| Historical VaR | 1.4071% | 2.2513% |
+| Parametric VaR | 1.4427% | 2.0708% |
+| Historical Expected Shortfall | 2.0100% | 3.0960% |
+
+### Stress-Test Results
+
+| Scenario | Portfolio Return | Estimated P&L |
+|---|---:|---:|
+| Technology sell-off | -1.60% | -$160 |
+| Broad market downturn | -5.20% | -$520 |
+| Interest rate increase | -1.80% | -$180 |
+
+### Backtesting Breach Rates
+
+| Confidence Level | Expected | Historical VaR | Parametric VaR |
+|---|---:|---:|---:|
+| 95% | 5.00% | 4.38% | 2.79% |
+| 99% | 1.00% | 0.40% | 0.40% |
+
+Results are illustrative and depend on the data retrieval date.
+
+## 7. Visualisations
+
+The model generates four visualisations to illustrate portfolio risk characteristics, compare risk estimates and assess potential losses under adverse market conditions.
+
+### 7.1 VaR Backtesting
+
+The chart compares out-of-sample daily portfolio returns against the historical and parametric 95% VaR thresholds. Historical VaR breaches are highlighted to identify days when realised losses exceeded the estimated threshold.
+
+![VaR Backtesting](figures/figure_1.png)
+
+### 7.2 Correlation Heatmap
+
+The heatmap displays pairwise correlations between the five equities, illustrating relationships between individual asset returns and potential diversification benefits.
+
+![Correlation Heatmap](figures/figure_2.png)
+
+### 7.3 Historical vs Parametric VaR
+
+The bar chart compares historical and parametric VaR estimates at the 95% and 99% confidence levels, expressed as potential daily losses in US dollars for the hypothetical $10,000 portfolio.
+
+![VaR Comparison](figures/figure_3.png)
+
+### 7.4 Stress Testing
+
+The bar chart illustrates estimated portfolio losses under three hypothetical scenarios: a technology sector sell-off, a broad market downturn and an interest rate increase.
+
+![Stress Testing](figures/figure_4.png)
+
+## 8. Technologies Used
+
+- Python
+- pandas
+- NumPy
+- yfinance
+- Matplotlib
+
+## 9. Running the Project
+
+Install the required libraries:
+
+```bash
+pip install pandas numpy yfinance matplotlib
+```
+
+Run the model:
+
+```bash
+python main.py
+```
+
+An internet connection is required to download market data.
+
+## 10. Limitations and Future Improvements
+
+The model is subject to historical data dependence, changing asset correlations, distributional assumptions and a limited backtesting period.
+
+Potential extensions include rolling VaR estimation, portfolio optimisation, risk contribution analysis and a broader multi-asset portfolio.
+
+## 11. Documentation
+
+For a detailed explanation of the calculations, assumptions and limitations, see the [Methodology Document](methodology.pdf).
