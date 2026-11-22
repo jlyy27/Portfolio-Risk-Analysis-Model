@@ -87,8 +87,8 @@ print(f'Historical VaR (99% confidence): {historical_var_99:.4%}')
 # covert the historical Var to dollar amounts
 portfolio_value = 10000 # assume a portfolio value of $10000
 
-historical_var_95_dollar = historical_var_95 * portfolio_value
-historical_var_99_dollar = historical_var_99 * portfolio_value
+historical_var_95_dollar = - historical_var_95 * portfolio_value
+historical_var_99_dollar = - historical_var_99 * portfolio_value
 
 print(f'\nHistorical VaR (95% confidence) in dollars: ${historical_var_95_dollar:.2f}')
 print(f'Historical VaR (99% confidence) in dollars: ${historical_var_99_dollar:.2f}')
