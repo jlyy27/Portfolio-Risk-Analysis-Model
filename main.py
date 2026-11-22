@@ -186,19 +186,15 @@ print(f'\nTraining Historical VaR (95% confidence): {train_historical_var_95:.4%
 print(f'Training Historical VaR (99% confidence): {train_historical_var_99:.4%}')
 
 # count the number of breaches in the testing data
-breaches_95 = (test_returns < -train_historical_var_95).sum()
-breaches_99 = (test_returns < -train_historical_var_99).sum()
+breaches_95 = test_returns < -train_var_95
+breaches_99 = test_returns < -train_var_99
 
-print(f'\nNumber of breaches in testing data (95% confidence): {breaches_95}')
-print(f'Number of breaches in testing data (99% confidence): {breaches_99}')
+print(f"95% VaR Breaches: {breaches_95.sum()}")
+print(f"99% VaR Breaches: {breaches_99.sum()}")
 
-# calculate oberserved breach rates
+# Calculate breach rates
 breach_rate_95 = breaches_95.mean()
 breach_rate_99 = breaches_99.mean()
-
-print(breaches_95.head())
-print(breaches_95.sum())
-print(breaches_95.mean())
 
 print(f"95% VaR Breach Rate: {breach_rate_95:.2%}")
 print(f"99% VaR Breach Rate: {breach_rate_99:.2%}")
