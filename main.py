@@ -168,3 +168,37 @@ rate_portfolio_pnl = rate_shock_portfolio_return * portfolio_value
 
 print(f'Interest Rate Hike Return: {rate_shock_portfolio_return:.2%}')
 print(f'Interest Rate Hike PnL: ${rate_portfolio_pnl:.2f}')
+
+# VaR Backtesting: split training n testing data
+split_index = int(len(portfolio_returns) * 0.8)
+
+train_returns = portfolio_returns.iloc[:split_index]
+test_returns = portfolio_returns.iloc[split_index:]
+
+print(f'\nTraining Data Length: {len(train_returns)}')
+print(f'Testing Data Length: {len(test_returns)}')
+
+# calculate the historical VaR on training data
+train_historical_var_95 = -np.percentile(train_returns, 5)
+train_historical_var_99 = -np.percentile(train_returns, 1)
+
+print(f'\nTraining Historical VaR (95% confidence): {train_historical_var_95:.4%}')
+print(f'Training Historical VaR (99% confidence): {train_historical_var_99:.4%}')
+
+# count the number of breaches in the testing data
+breaches_95 = (test_returns < -train_historical_var_95).sum()
+breaches_99 = (test_returns < -train_historical_var_99).sum()
+
+print(f'\nNumber of breaches in testing data (95% confidence): {breaches_95}')
+print(f'Number of breaches in testing data (99% confidence): {breaches_99}')
+
+# calculate oberserved breach rates
+breach_rate_95 = breaches_95.mean()
+breach_rate_99 = breaches_99.mean()
+
+print(breaches_95.head())
+print(breaches_95.sum())
+print(breaches_95.mean())
+
+print(f"95% VaR Breach Rate: {breach_rate_95:.2%}")
+print(f"99% VaR Breach Rate: {breach_rate_99:.2%}")
