@@ -93,22 +93,6 @@ historical_var_99_dollar = historical_var_99 * portfolio_value
 print(f'\nHistorical VaR (95% confidence) in dollars: ${historical_var_95_dollar:.2f}')
 print(f'Historical VaR (99% confidence) in dollars: ${historical_var_99_dollar:.2f}')
 
-# calculate the historical Value at Risk (VaR)
-historical_var_95 = - np.percentile(portfolio_returns,5) # 95% confidence level
-historical_var_99 = -np.percentile(portfolio_returns,1) # 99% confidence level
-
-print(f'\nHistorical VaR (95% confidence): {historical_var_95:.4%}')
-print(f'Historical VaR (99% confidence): {historical_var_99:.4%}')
-
-# covert the historical Var to dollar amounts
-portfolio_value = 10000 # assume a portfolio value of $10000
-
-historical_var_95_dollar = historical_var_95 * portfolio_value
-historical_var_99_dollar = historical_var_99 * portfolio_value
-
-print(f'\nHistorical VaR (95% confidence) in dollars: ${historical_var_95_dollar:.2f}')
-print(f'Historical VaR (99% confidence) in dollars: ${historical_var_99_dollar:.2f}')
-
 # calculate the parametric VaR
 parametric_var_95 = - (portfolio_mean - 1.65 * portfolio_std) # 95% confidence level
 parametric_var_99 = - (portfolio_mean - 2.33 * portfolio_std) # 99% confidence level
@@ -198,8 +182,8 @@ print(f'\nTraining Historical VaR (95% confidence): {train_historical_var_95:.4%
 print(f'Training Historical VaR (99% confidence): {train_historical_var_99:.4%}')
 
 # count the number of breaches in the testing data
-breaches_95 = test_returns < -train_var_95
-breaches_99 = test_returns < -train_var_99
+breaches_95 = test_returns < -train_historical_var_95
+breaches_99 = test_returns < -train_historical_var_99
 
 print(f"95% VaR Breaches: {breaches_95.sum()}")
 print(f"99% VaR Breaches: {breaches_99.sum()}")
