@@ -125,7 +125,7 @@ The bar chart illustrates estimated portfolio losses under three hypothetical sc
 Install the required libraries:
 
 ```bash
-pip install pandas numpy yfinance matplotlib
+pip install -r requirements.txt
 ```
 
 Run the model:
