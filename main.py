@@ -196,5 +196,29 @@ print(f"99% VaR Breaches: {breaches_99.sum()}")
 breach_rate_95 = breaches_95.mean()
 breach_rate_99 = breaches_99.mean()
 
+# calculate the parametric VaR on training data
+train_mean = train_returns.mean()
+train_std = train_returns.std()
+
+train_param_var_95 = -(train_mean - 1.645 * train_std)
+train_param_var_99 = -(train_mean - 2.326 * train_std)
+
+print(f"Training Parametric 95% VaR: {train_param_var_95:.4%}")
+print(f"Training Parametric 99% VaR: {train_param_var_99:.4%}")
+
+# Count parametric VaR breaches
+param_breaches_95 = test_returns < -train_param_var_95
+param_breaches_99 = test_returns < -train_param_var_99
+
+print(f"Parametric 95% VaR Breaches: {param_breaches_95.sum()}")
+print(f"Parametric 99% VaR Breaches: {param_breaches_99.sum()}")
+
+# Calculate parametric VaR breach rates
+param_breach_rate_95 = param_breaches_95.mean()
+param_breach_rate_99 = param_breaches_99.mean()
+
+print(f"Parametric 95% VaR Breach Rate: {param_breach_rate_95:.2%}")
+print(f"Parametric 99% VaR Breach Rate: {param_breach_rate_99:.2%}")
+
 print(f"95% VaR Breach Rate: {breach_rate_95:.2%}")
 print(f"99% VaR Breach Rate: {breach_rate_99:.2%}")
